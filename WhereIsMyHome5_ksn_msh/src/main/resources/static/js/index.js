@@ -6,12 +6,19 @@ function getContextPath() {
 let contextPath = getContextPath();
 
 window.onload = function () {
+	
+	document.querySelector("#btnNavSignup").onclick = function() {
+		window.location.href="/register";
+	}
+	
+	
+	
   getInfo();
   getEvent();
   document.querySelector("#btnLogin").onclick = function () {
-    let loginEmail = document.querySelector("#loginEmail").value;
-    let loginPassword = document.querySelector("#loginPassword").value;
-    console.log( loginEmail, loginPassword )
+    let userEmail = document.querySelector("#userEmail").value;
+    let userPassword = document.querySelector("#userPassword").value;
+    console.log( userEmail, userPassword )
 
     // 유효성 검사 => post 전송
     if (validate()) {
@@ -31,12 +38,12 @@ function validate() {
   let loginEmailValid = false;
   let loginPasswordValid = false;
 
-  let loginEmail = document.querySelector("#loginEmail").value;
-  if (loginEmail.length > 0) {
+  let userEmail = document.querySelector("#userEmail").value;
+  if (userEmail.length > 0) {
     loginEmailValid = true;
   }
-  let loginPassword = document.querySelector("#loginPassword").value;
-  if (loginPassword.length > 0) {
+  let userPassword = document.querySelector("#userPassword").value;
+  if (userPassword.length > 0) {
     loginPasswordValid = true;
   }
 
@@ -54,11 +61,11 @@ async function login() {
   //로그인 성공 -> 게시판 메인 페이지로 이동(board/boardMain)
   //로그인 실패 -> alert
 
-  let loginEmail = document.querySelector("#loginEmail").value;
-  let loginPassword = document.querySelector("#loginPassword").value;
+  let loginEmail = document.querySelector("#userEmail").value;
+  let loginPassword = document.querySelector("#userPassword").value;
   let urlParmas = new URLSearchParams({
-    loginEmail: loginEmail,
-    loginPassword: loginPassword,
+	  userEmail: userEmail,
+	  userPassword: userPassword,
   });
 
   let fetchOptions = {
@@ -69,7 +76,7 @@ async function login() {
   let response = await fetch("/login", fetchOptions);
   let data = await response.json(); //==Json.parse();
   if (data.result == "success") {
-    window.location.href = "/";
+    window.location.href = "/main";
   } else if (data.result == "fail") {
     alert("아이디나 비밀번호를 확인하세요.");
   }
@@ -80,7 +87,7 @@ async function logout() {
   let data = await response.json(); //==Json.parse();
 
   if (data.result == "success") {
-    window.location.href = "/login";
+    window.location.href = "/main";
   } else if (data.result == "fail") {
     alert("로그아웃 실패");
   }

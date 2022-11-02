@@ -126,6 +126,9 @@ window.onload = function () {
     else return false;
   }
 
+//register  
+
+  
   async function regist() {
     let userEmail = document.querySelector("#userEmail").value;
     let userPassword = document.querySelector("#userPassword").value;
@@ -146,13 +149,13 @@ window.onload = function () {
       body: urlParmas,
     };
 
-    let response = await fetch(contextPath+"/user/regist", fetchOptions); //fetch( url(login servlet), option );
+    let response = await fetch("/register", fetchOptions); //fetch( url(login servlet), option );
     let data = await response.json(); //==Json.parse();
     console.log(data.result);
     if (data.result == "success") {
       //alertify.alert("Welcom", "회원가입을 축하합니다. 로그인 페이지로 이동합니다.", function () {});
       alert("환영합니다.");
-      window.location.href = "../jsp/index.jsp";
+      window.location.href = "/main";
       //login.jsp => board.jsp로 페이지 이동
     } else if (data.result == "fail") {
       alert("서버오류");
