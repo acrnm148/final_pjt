@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="whereismyhome_4_algo_8-ksn-khg">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/WhereIsMyHome/src"/>
+        <property name="context-root" value="whereismyhome_4_algo_8-ksn-khg"/>
+        <property name="java-output-path" value="/whereismyhome_4_algo_8-ksn-khg/bin"/>
+    </wb-module>
+</project-modules>

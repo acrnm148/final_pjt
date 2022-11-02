@@ -1,0 +1,253 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%-- User를 사용하기 위해 dto 패키지를 import 한다. --%>
+<%@ page import="dto.*"%>
+<%-- jstl의 core 라이브러리를 사용하기 위해 taglib를 이용한다. --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+    
+    
+<%
+  String contextPath = request.getContextPath();
+%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="<%=contextPath%>/css/basic.css" />
+    <link rel="stylesheet" href="<%=contextPath%>/css/index.css" />
+    <!--  <script src="<%=contextPath%>/js/index.js"></script>-->
+
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--custom -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac9eedff848a7c184a6a6818246bf6a5&libraries=services"></script>
+  </head>
+  <body>
+    <!--navbar 시작-->
+    <div id="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-black">
+        <div class="container-fluid">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="index.jsp" style="color: white">구해줘 홈즈</a>
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" style="color: white" href="#">공지사항</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="color: white" href="#">오늘의 뉴스</a>
+              </li>
+              <c:if test="${!empty userDto && userDto.user_clsf.equals('003') }">
+              <li class="nav-item">
+				<button class="btn btn-secondary" onclick="location.href='../eventuser?action=list';">이벤트 참여 사용자 관리</button>
+				</li>
+				<li class="nav-item">
+				<button class="btn btn-secondary" onclick="location.href='eventList.jsp';">이벤트 관리</button>
+				</li>
+			</c:if>
+            </ul>
+            <button id="btnNavInfo" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#infoModal"  style="display:none">내정보</button>
+            <button id="btnNavSignup" class="btn btn-outline-success signup" onclick="location.href = '../user/signup' ">Sign up</button>
+            <button id="btnNavLogin" class="btn btn-outline-success login" data-bs-toggle="modal" data-bs-target="#loginModal">Log in</button>
+            <button id="btnNavLogout" class="btn btn-outline-success logout" data-bs-toggle="modal" data-bs-target="#logoutModal" style="display:none">Log Out</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!--navbar 끝-->
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="loginEmail" class="col-form-label">아이디</label>
+                <input type="text" class="form-control" id="loginEmail" value="">
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="col-form-label">비밀번호</label>
+                <input type="password" class="form-control" id="loginPassword" value="">
+              </div>
+            </form>            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal" id ="btnLogin">Log in</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Login Modal 끝 -->
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">         
+            로그아웃 하시겠습니까?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+            <button type="button" id ="btnLogout"class="btn btn-outline-success" data-bs-dismiss="modal">Log Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Logout Modal 끝 -->
+
+    <!-- 내정보 끝-->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">내정보</h5>
+            <img src="../img/user/noProfile.png" id="myProfile" width="25px" sytle="margin-left:15px">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+          </div>
+          <div class="modal-body">
+            <div class="div-flex"><div>이메일 : &nbsp; </div><div id="myEmail"></div></div>
+            <div class="div-flex"><div>이름 :  &nbsp;</div><div id="myName"></div></div>
+            <div class="div-flex"><div>고유번호 :  &nbsp;</div><div id="mySeq"></div></div>
+            <div class="div-flex"><div>사용자 권한 코드 :  &nbsp;</div><div id="myUserClsf"></div></div>
+            <div class="div-flex"><div>아이디 생성일 :  &nbsp;</div><div id="myregisterDate"></div></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="location.href = 'infoChange.jsp' ">내정보 수정</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 내정보 끝-->
+
+    <!--이미지 시작-->
+    <div id="contentImg"></div>
+    <!--이미지 끝-->
+
+    <!-- 주소 선택 시작-->
+    <div class="selection_container d-flex justify-content-evenly align-items-center">
+      <a href="<%=contextPath%>/jsp/deal.jsp">
+        <button type="button" class="btn btn-secondary search-btn" id="searchDongBtn">법정동으로 찾기</button>
+      </a>
+      <a href="<%=contextPath%>/jsp/deal_by_apart_name.jsp">
+        <button type="button" class="btn btn-secondary search-btn" id="searchApartBtn">아파트 명으로 찾기</button>
+      </a>
+    </div>
+    <!-- 주소 선택 끝-->
+
+    <!-- body 시작-->
+    <div id="body">
+      <div id="main-content">
+        <div class="row">
+          <div class="col-3">
+            <img src="../img/article.jpg" id="articleImg">
+          </div>
+          <div class="col-9">
+            <div class="row">
+              <div class="col-6 rank">
+                <h2 class="title">인기 건축 디자인</h2>
+                <ul>
+                  <li><a href="#"> 미니멀리즘</a></li>
+                  <li><a href="#"> 빌라 디자인</a></li>
+                  <li><a href="#"> 전통 주택</a></li>
+                  <li><a href="#"> 모던 하우스 디자인</a></li>
+                  <li><a href="#"> 오두막집</a></li>
+                  <li><a href="#"> 현대식 건물</a></li>
+              </ul>
+              </div>
+              
+              <!-- 이벤트 -->
+		      <div
+		      id="carouselExampleControls"
+		      class="carousel slide"
+		      data-bs-ride="carousel"
+		      style="width: 500px"
+		    >
+		      <div class="carousel-inner" id="event-wrapper">
+		      	<!-- 
+		        <div class="carousel-item active">
+		          <a href="../html/event1.html">
+		          	<img src="../img/no_img.png" class="d-block w-100" alt="no_img" />
+		          </a>
+		        </div>
+		        <div class="carousel-item">
+		          <a href="../html/event2.html">
+		          	<img src="../img/no_img.png" class="d-block w-100" alt="no_img" />
+		          </a>
+		        </div>
+		        <div class="carousel-item">
+		          <a href="../html/event3.html">
+		          	<img src="../img/no_img.png" class="d-block w-100" alt="no_img" />
+		          </a>
+		        </div>
+		         -->
+		      </div>
+		      <button
+		        class="carousel-control-prev"
+		        type="button"
+		        data-bs-target="#carouselExampleControls"
+		        data-bs-slide="prev"
+		      >
+		        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		        <span class="visually-hidden">Previous</span>
+		      </button>
+		      <button
+		        class="carousel-control-next"
+		        type="button"
+		        data-bs-target="#carouselExampleControls"
+		        data-bs-slide="next"
+		      >
+		        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		        <span class="visually-hidden">Next</span>
+		      </button>
+		    </div>
+		    <!-- 이벤트 끝 -->
+              
+              
+              <!-- <div class="col-6 article" >
+                <h2 class="title">부동산 뉴스</h2>
+                <a href="https://www.mk.co.kr/news/realestate/view/2022/07/602976/">"가격 좀 싸졌네"하고 아무 집이나 덜컥 샀다간 낭패 - 매일경제</a><br>
+                  <h5 style="color: gray;">부동산 시장이 심상치 않다. 그동안 가격 급등에 대한 피로감으로 연초부터 주춤했던 서울 등 주요 지역 아파트 가격이 새 정부 출범 이후 좀 오르나 싶더니, 인플레이션과 대출금리 인상 우려 등으로 다시 밀리는 분위기다. 한국부동산원에 따르면 올 상반기 전국 아파트값은 0.11% 하락했고, 서울(-0.19%)과 수도권(-0.4%) 등 주요 지역 역시 부진한 모습...</h5>
+                </a>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <div>
+    <!-- body 끝-->
+
+    <!-- 푸터 시작 -->
+    <footer>
+      <div id="footer-wrap">
+        <div id="footer-img"></div>
+        <div>
+          <div class="footer-text1">Find Us</div>
+          <div class="footer-text2">(SSAFY) 서울시 강남구 테헤란로 멀티스퀘어</div>
+          <div class="footer-text2">1544-9001</div>
+        </div>
+      </div>
+    </footer>
+    <!-- 푸터 끝 -->
+    <script type="text/javascript" src="../js/index.js"></script>
+  </body>
+</html>
