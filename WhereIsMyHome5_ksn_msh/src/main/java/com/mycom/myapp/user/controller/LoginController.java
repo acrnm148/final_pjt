@@ -24,7 +24,10 @@ public class LoginController {
     @PostMapping(value="/login")
     public ResponseEntity<Map<String, String>> login(UserDto dto, HttpSession session){
     	
+    	System.out.println(dto);
+    	
         UserDto userDto = service.login(dto);
+        System.out.println(userDto);
 
         Map<String, String> map = new HashMap<>();
         if( userDto != null ) { // login 성공

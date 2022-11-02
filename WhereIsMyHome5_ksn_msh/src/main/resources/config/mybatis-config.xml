@@ -10,6 +10,6 @@
 	<mappers>
 		<!-- <mapper resource="mapper/board_query.xml"></mapper> -->
 		<mapper resource="mapper/login_query.xml"></mapper>
-		<!-- <mapper resource="mapper/user_query.xml"></mapper> -->
+		<mapper resource="mapper/user_query.xml"></mapper>
 	</mappers>
 </configuration>
