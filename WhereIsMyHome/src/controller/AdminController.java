@@ -16,8 +16,8 @@ import dto.EventDto;
 import service.EventServiceImpl;
 
 
-@WebServlet("/event/*")
-public class EventServlet extends HttpServlet {
+@WebServlet("/admin/*")
+public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	EventServiceImpl eventService= EventServiceImpl.getinstance();
@@ -28,10 +28,6 @@ public class EventServlet extends HttpServlet {
 		System.out.println("path : "+path);
 		response.setContentType("text/html; charset=utf-8");
 		
-		
-		switch(path) {
-			case "/event/getEvent":getEvent(request,response);break;
-		}
 	}
 
 
@@ -45,8 +41,9 @@ public class EventServlet extends HttpServlet {
 		
 		
 		switch(path) {
-			case "/event/registEvent":registEvent(request,response);break;
-			case "/event/deleteEvent":deleteEvent(request,response);break;
+			//나머지는 adminController에
+			case "/admin/registEvent":registEvent(request,response);break;
+			case "/admin/deleteEvent":deleteEvent(request,response);break;
 		}
 		
 	}

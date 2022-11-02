@@ -18,7 +18,7 @@ import service.EventUserService;
 import service.EventUserServiceImpl;
 
 @WebServlet("/eventuser")
-public class EventUserServlet extends HttpServlet {
+public class EventUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	private final EventUserService eventUserService = EventUserServiceImpl.getInstance();

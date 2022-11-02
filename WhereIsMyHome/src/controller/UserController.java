@@ -23,7 +23,7 @@ import service.UserServiceImpl;
 
 
 @WebServlet("/user/*")
-public class UserServlet extends HttpServlet {
+public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	UserService userService = UserServiceImpl.getinstance();
@@ -67,7 +67,7 @@ public class UserServlet extends HttpServlet {
 		List<CodeDto> codeList = codeService.getCodeList();
 		
 		request.setAttribute("codeList", codeList);
-		request.getRequestDispatcher("/jsp/signup.jsp").forward(request, response);
+		request.getRequestDispatcher("/page/signup.html").forward(request, response);
 	}
 	
 	protected void regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

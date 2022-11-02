@@ -20,7 +20,7 @@ import service.HouseService;
 import service.HouseServiceImpl;
 
 @WebServlet("/house/*")
-public class HouseServlet extends HttpServlet {
+public class HouseController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	HouseService service = HouseServiceImpl.getInstance();

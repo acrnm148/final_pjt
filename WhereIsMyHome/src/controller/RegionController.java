@@ -20,7 +20,7 @@ import service.RegionServiceImpl;
  * Servlet implementation class RegionServlet
  */
 @WebServlet("/region/*")
-public class RegionServlet extends HttpServlet {
+public class RegionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	RegionService service = RegionServiceImpl.getInstance();
