@@ -1,15 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-<%-- User를 사용하기 위해 dto 패키지를 import 한다. --%>
-<%@ page import="dto.*"%>
-<%-- jstl의 core 라이브러리를 사용하기 위해 taglib를 이용한다. --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-    
-    
-<%
-  String contextPath = request.getContextPath();
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     
-    <link rel="stylesheet" href="<%=contextPath%>/css/basic.css" />
-    <link rel="stylesheet" href="<%=contextPath%>/css/index.css" />
+    <link rel="stylesheet" href="../css/basic.css" />
+    <link rel="stylesheet" href="../css/index.css" />
     <!--  <script src="<%=contextPath%>/js/index.js"></script>-->
 
     <!-- bootstrap -->
@@ -45,7 +33,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="index.jsp" style="color: white">구해줘 홈즈</a>
+            <a class="navbar-brand" href="index.html" style="color: white">구해줘 홈즈</a>
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
@@ -54,17 +42,18 @@
               <li class="nav-item">
                 <a class="nav-link" style="color: white" href="#">오늘의 뉴스</a>
               </li>
-              <c:if test="${!empty userDto && userDto.user_clsf.equals('003') }">
+              <!-- 관리자 로그인 했을 경우 View 변경 -->
+              <!-- <c:if test="${!empty userDto && userDto.user_clsf.equals('003') }">
               <li class="nav-item">
 				<button class="btn btn-secondary" onclick="location.href='../eventuser?action=list';">이벤트 참여 사용자 관리</button>
 				</li>
 				<li class="nav-item">
 				<button class="btn btn-secondary" onclick="location.href='eventList.jsp';">이벤트 관리</button>
 				</li>
-			</c:if>
+			</c:if> -->
             </ul>
             <button id="btnNavInfo" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#infoModal"  style="display:none">내정보</button>
-            <button id="btnNavSignup" class="btn btn-outline-success signup" onclick="location.href = '../user/signup' ">Sign up</button>
+            <button id="btnNavSignup" class="btn btn-outline-success signup" onclick="location.href = 'signup.html' ">Sign up</button>
             <button id="btnNavLogin" class="btn btn-outline-success login" data-bs-toggle="modal" data-bs-target="#loginModal">Log in</button>
             <button id="btnNavLogout" class="btn btn-outline-success logout" data-bs-toggle="modal" data-bs-target="#logoutModal" style="display:none">Log Out</button>
           </div>
@@ -131,7 +120,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="location.href = 'infoChange.jsp' ">내정보 수정</button>
+            <button type="button" class="btn btn-primary" onclick="location.href = 'infoChange.html' ">내정보 수정</button>
           </div>
         </div>
       </div>
@@ -144,10 +133,10 @@
 
     <!-- 주소 선택 시작-->
     <div class="selection_container d-flex justify-content-evenly align-items-center">
-      <a href="<%=contextPath%>/jsp/deal.jsp">
+      <a href="deal.html">
         <button type="button" class="btn btn-secondary search-btn" id="searchDongBtn">법정동으로 찾기</button>
       </a>
-      <a href="<%=contextPath%>/jsp/deal_by_apart_name.jsp">
+      <a href="deal_by_apart_name.html">
         <button type="button" class="btn btn-secondary search-btn" id="searchApartBtn">아파트 명으로 찾기</button>
       </a>
     </div>

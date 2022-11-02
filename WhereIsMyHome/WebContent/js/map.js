@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<script>
 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -38,7 +35,7 @@ function makeOutListener(infowindow) {
 ///////////////////////////////////////////////////////
 function markInMap(lat, lng, aptName) {
   console.log("좌표", lat, lng);
-  if(marker != null){
+  if (marker != null) {
     marker.setMap(null); // 이전 마커를 없앰
   }
 
@@ -58,10 +55,13 @@ function markInMap(lat, lng, aptName) {
   // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
   // 이벤트 리스너로는 클로저를 만들어 등록합니다
   // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-  kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
+  kakao.maps.event.addListener(
+    marker,
+    "mouseover",
+    makeOverListener(map, marker, infowindow)
+  );
   kakao.maps.event.addListener(marker, "mouseout", makeOutListener(infowindow));
   // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
   marker.setMap(map);
   map.setCenter(coords);
 }
-</script>

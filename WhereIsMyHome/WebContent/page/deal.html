@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- kakao -->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac9eedff848a7c184a6a6818246bf6a5&libraries=services"
+    ></script>
+
+    <!-- bootstrap-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Alertify -->
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"
+    />
+    <!-- Default theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"
+    />
+    <!-- Semantic UI theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"
+    />
+    <!-- Bootstrap theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"
+    />
+
+    <!--custom -->
+    <link href="../css/basic.css" rel="stylesheet" />
+    <link href="../css/deal.css" rel="stylesheet" />
+    <title>Document</title>
+    <script src="../js/map.js" defer></script>
+    <script src="../js/deal_detail.js" defer></script>
+    <script src="../js/deal_select.js" defer></script>
+  </head>
+  <body>
+    <!--navbar 시작-->
+    <div id="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-black">
+        <div class="container-fluid">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="index.html" style="color: white"
+              >구해줘 홈즈</a
+            >
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" style="color: white" href="#">공지사항</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="color: white" href="#"
+                  >오늘의 뉴스</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div
+      class="selection_container d-flex justify-content-evenly align-items-center p-3"
+    >
+      <!-- 주소 선택 시작-->
+      <select id="sido" class="form-select" aria-label="Default select example">
+        <option selected value="">도/광역시</option>
+        <option value="서울특별시">서울특별시</option>
+      </select>
+      <select
+        id="gugun"
+        class="form-select"
+        aria-label="Default select example"
+      >
+        <option selected value="">시/구/군</option>
+      </select>
+      <select id="dong" class="form-select" aria-label="Default select example">
+        <option selected value="">동</option>
+      </select>
+      <button class="btn btn-success search-btn" type="button" id="search-btn">
+        검색
+      </button>
+      <!-- 주소 선택 끝-->
+    </div>
+    <div id="map"></div>
+
+    <section>
+      <!-- 전체 페이지 -->
+      <div class="deal-info-container">
+        <div class="deal-info-list">
+          <div id="deal-info-container-title">거래 정보</div>
+          <div class="deal-info-list-elem"></div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div id="paginationWrapper"></div>
+      </div>
+
+      <!-- 상세 페이지 -->
+      <div
+        class="deal-info-container detail-info-container"
+        style="display: none"
+      ></div>
+    </section>
+
+    <script type="text/javascript" src="../js/util.js"></script>
+    <%@ include file="/jsp/import/deal_select.jsp"%> <%@ include
+    file="/jsp/import/deal_detail.jsp"%>
+
+    <script>
+      var OFFSET = 0;
+
+      var LIST_ROW_COUNT = 10; // 한페이지에 보여줄 페이지 수 ; 백엔드의 limit에 해당
+      var PAGE_LINK_COUNT = 5; // pagination link를 몇개 만들건지
+      var TOTAL_LIST_ITEM_COUNT = 0; // 총 건수
+      var CURRENT_PAGE_INDEX = 1;
+
+      window.onload = function () {
+        document.querySelector("#search-btn").onclick = function () {
+          // console.log("push search button");
+          if (validateHouseListByDong()) {
+            houseListByDong();
+          } else {
+          }
+        };
+        // 도시 선택하면 시/구/군 options를 초기화하기
+        document.querySelector("#sido").onchange = function () {
+          document.querySelector("#gugun").innerHTML =
+            '<option selected value="">시/구/군</option>';
+          document.querySelector("#dong").innerHTML =
+            '<option selected value="">동</option>';
+          // 시/구/군 리스트 가져오기
+          let sidoName = document.querySelector("#sido").value;
+          gugunList(sidoName);
+        };
+        // 시/구/군 선택하면 동 options를 초기화하기
+        document.querySelector("#gugun").onchange = function () {
+          document.querySelector("#dong").innerHTML =
+            '<option selected value="">동</option>';
+          // 시/구/군 리스트 가져오기
+          let dongName = document.querySelector("#gugun").value;
+          dongList(dongName);
+        };
+      };
+
+      /////////////////////////////////////////////
+      ////////////////////// 법명동으로 아파트 정보 찾기 //////
+      function validateHouseListByDong() {
+        let sido = document.querySelector("#sido").value;
+        let gugun = document.querySelector("#gugun").value;
+        let dong = document.querySelector("#dong").value;
+        if (sido.length == 0) {
+          alertify.warning("도/광역시를 선택해주세요.");
+          return false;
+        } else if (gugun.length == 0) {
+          alertify.warning("도/구/군을 선택해주세요.");
+          return false;
+        } else if (dong.length == 0) {
+          alertify.warning("동을 선택해주세요.");
+          return false;
+        }
+        return true;
+      }
+
+      /** 법명동 아파트 조회 리스트 */
+      async function houseListByDong() {
+        let sido = document.querySelector("#sido").value;
+        let gugun = document.querySelector("#gugun").value;
+        let dong = document.querySelector("#dong").value;
+
+        let url = "<%= contextPath %>/house/houseListByDong";
+        let urlParams = new URLSearchParams({
+          dong: dong,
+          limit: LIST_ROW_COUNT,
+          offset: OFFSET,
+        });
+        let fetchOptions = {
+          method: "POST",
+          body: urlParams,
+        };
+
+        try {
+          let response = await fetch(url, fetchOptions);
+          let data = await response.json();
+          // console.log(data);
+          makeHouseListByDongHtml(data);
+          // 페이지네이션
+          houseDealByDongTotalCnt(dong);
+        } catch (error) {
+          console.log(error);
+          alertify.error("글 조회 과정에서 문제가 생겼습니다.");
+        }
+      }
+
+      function makeHouseListByDongHtml(data) {
+        let dealInfoList = document.querySelector(".deal-info-list-elem");
+        let innerList = ``;
+        if (data.length == 0) {
+          innerList = `
+          <hr>
+          <div class="d-flex justify-content-center align-content-center">
+            <div>검색 결과가 없어요</div>
+          </div>
+          `;
+        } else {
+          data.forEach((info) => {
+            // console.log(info);
+            let no = info.no;
+            let dong = info.dong;
+            let aptName = info.aptName;
+            let code = info.code;
+            let dealAmount = info.dealAmount.trim();
+            let buildYear = info.buildYear;
+            let dealYear = info.dealYear;
+            let dealMonth = info.dealMonth;
+            let dealDay = info.dealDay;
+            let area = info.area;
+            let floor = info.floor;
+            let jibun = info.jibun;
+            let houseNo = info.houseNo;
+
+            let dealDate = makeDateStr(dealYear, dealMonth, dealDay, "/");
+            let divId = "deal" + no;
+            innerList += `
+                  <hr>  
+                  <div id="\${divId}" data-no=\${no} class="deal-info" detail-toggle="off">
+                      <div class="name">\${aptName}</div>
+                      <div class="cost">거래금액 : \${dealAmount}만원</div>
+                      <div class="area">면적 : \${area}</div>
+                      <div class="date">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-calendar3 date-icon" viewBox="0 0 16 16">
+                          <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                          <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                          </svg>
+                      \${dealDate}</div>
+                  </div>
+                `;
+          });
+        }
+        dealInfoList.innerHTML = innerList;
+
+        /** 상세 조회 이벤트 등록*/
+        makeHouseDetailHtmlEventHandler();
+      }
+
+      /////////////////////////////////// 페이지네이션
+      /** 법정동으로 검색한 아파트 거래 정보 리스트 총 개수 */
+      async function houseDealByDongTotalCnt(dong) {
+        let url = "<%= contextPath %>/house/houseListByDongTotalCnt";
+        let urlParams = new URLSearchParams({
+          dong: dong,
+        });
+
+        let fetchOptions = {
+          method: "POST",
+          headers: {
+            async: "true",
+          },
+          body: urlParams,
+        };
+
+        try {
+          let response = await fetch(url, fetchOptions);
+          let data = await response.json();
+          // console.log(data);
+          TOTAL_LIST_ITEM_COUNT = data.totalCnt;
+          makePaginationHtml(
+            LIST_ROW_COUNT,
+            PAGE_LINK_COUNT,
+            CURRENT_PAGE_INDEX,
+            TOTAL_LIST_ITEM_COUNT,
+            "paginationWrapper"
+          ); // util.js에 있음
+        } catch (error) {
+          // js에서는 이렇게 error를 받아오나보다!
+          console.log(error);
+          alertify.error("글 조회 과정에서 문제가 생겼습니다.");
+        }
+      }
+
+      /** 페이지를 옮겼을 때, 해당 페이지에 있는 게시글 목록을 보여준다.
+       * util.js의 makePaginationHtml() 에서 호출됨
+       */
+      function movePage(pageIndex) {
+        OFFSET = (pageIndex - 1) * LIST_ROW_COUNT; // 현재 페이지 인덱스 전까지는 다 뛰어넘음
+        CURRENT_PAGE_INDEX = pageIndex;
+        houseListByDong(); // 바뀐 페이지를 다시 보여줌
+      }
+    </script>
+  </body>
+</html>
