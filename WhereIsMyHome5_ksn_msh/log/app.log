@@ -1,3 +1,72 @@
 2022-11-04 01:37:14.776 DEBUG 29124 --- [http-nio-8080-exec-7] com.mycom.myapp.user.dao.LoginDao.login  : ==>  Preparing: select user_seq, user_name, user_password, user_email, user_profile_image_url, user_register_date, user_clsf from users where user_email = ?
 2022-11-04 01:37:14.834 DEBUG 29124 --- [http-nio-8080-exec-7] com.mycom.myapp.user.dao.LoginDao.login  : ==> Parameters: suna@ssafy.com(String)
 2022-11-04 01:37:14.889 DEBUG 29124 --- [http-nio-8080-exec-7] com.mycom.myapp.user.dao.LoginDao.login  : <==      Total: 1
+2022-11-04 03:47:16.487  INFO 29124 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 25 class path changes (0 additions, 19 deletions, 6 modifications)
+2022-11-04 03:47:18.312  INFO 29124 --- [Thread-6] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-04 03:47:18.318  INFO 29124 --- [Thread-6] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2022-11-04 03:47:18.351  WARN 29124 --- [Thread-6] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2078)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2022-11-04 03:47:18.352  WARN 29124 --- [Thread-6] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [logback-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1081)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2022-11-04 03:47:18.394  INFO 29124 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-11-04 03:47:18.419  INFO 29124 --- [Thread-6] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-11-04 03:47:19.077  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : Starting WhereIsMyHome5KsnMshApplication using Java 1.8.0_211 on sunakang with PID 29124 (C:\Users\Owner\Desktop\pjt\WhereIsMyHome5_ksn_msh\bin\main started by Owner in C:\Users\Owner\Desktop\pjt\WhereIsMyHome5_ksn_msh)
+2022-11-04 03:47:19.077  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : No active profile set, falling back to 1 default profile: "default"
+2022-11-04 03:47:19.974  INFO 29124 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-04 03:47:19.976  INFO 29124 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-04 03:47:19.976  INFO 29124 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-04 03:47:20.002  INFO 29124 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-04 03:47:20.002  INFO 29124 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 919 ms
+2022-11-04 03:47:20.176  INFO 29124 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-11-04 03:47:20.333  INFO 29124 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-04 03:47:20.351  INFO 29124 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-04 03:47:20.359  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : Started WhereIsMyHome5KsnMshApplication in 1.36 seconds (JVM running for 74834.217)
+2022-11-04 03:47:20.361  INFO 29124 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-11-04 03:49:30.292  INFO 29124 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-11-04 03:49:30.297  INFO 29124 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-11-04 03:49:30.299  INFO 29124 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2022-11-04 03:55:58.337  INFO 29124 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 7 class path changes (0 additions, 7 deletions, 0 modifications)
+2022-11-04 03:55:59.585  INFO 29124 --- [Thread-8] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-04 03:55:59.586  INFO 29124 --- [Thread-8] o.a.c.c.C.[Tomcat].[localhost].[/]       : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2022-11-04 03:55:59.921  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : Starting WhereIsMyHome5KsnMshApplication using Java 1.8.0_211 on sunakang with PID 29124 (C:\Users\Owner\Desktop\pjt\WhereIsMyHome5_ksn_msh\bin\main started by Owner in C:\Users\Owner\Desktop\pjt\WhereIsMyHome5_ksn_msh)
+2022-11-04 03:55:59.922  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : No active profile set, falling back to 1 default profile: "default"
+2022-11-04 03:56:00.677  INFO 29124 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-04 03:56:00.678  INFO 29124 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-04 03:56:00.679  INFO 29124 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-04 03:56:00.707  INFO 29124 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-04 03:56:00.707  INFO 29124 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 781 ms
+2022-11-04 03:56:01.117  INFO 29124 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-11-04 03:56:01.420  INFO 29124 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-04 03:56:01.459  INFO 29124 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-04 03:56:01.479  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : Started WhereIsMyHome5KsnMshApplication in 1.624 seconds (JVM running for 75355.336)
+2022-11-04 03:56:01.484  INFO 29124 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2022-11-04 03:56:03.042  INFO 29124 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 5 class path changes (0 additions, 0 deletions, 5 modifications)
+2022-11-04 03:56:03.758  INFO 29124 --- [Thread-12] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2022-11-04 03:56:03.973  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : Starting WhereIsMyHome5KsnMshApplication using Java 1.8.0_211 on sunakang with PID 29124 (C:\Users\Owner\Desktop\pjt\WhereIsMyHome5_ksn_msh\bin\main started by Owner in C:\Users\Owner\Desktop\pjt\WhereIsMyHome5_ksn_msh)
+2022-11-04 03:56:03.973  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : No active profile set, falling back to 1 default profile: "default"
+2022-11-04 03:56:04.491  INFO 29124 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-04 03:56:04.493  INFO 29124 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-04 03:56:04.493  INFO 29124 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-04 03:56:04.531  INFO 29124 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-04 03:56:04.532  INFO 29124 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 553 ms
+2022-11-04 03:56:04.644  INFO 29124 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2022-11-04 03:56:04.722  INFO 29124 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-11-04 03:56:04.747  INFO 29124 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-04 03:56:04.752  INFO 29124 --- [restartedMain] c.m.m.WhereIsMyHome5KsnMshApplication    : Started WhereIsMyHome5KsnMshApplication in 0.832 seconds (JVM running for 75358.611)
+2022-11-04 03:56:04.754  INFO 29124 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
