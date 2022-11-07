@@ -1,3 +1,5 @@
+const SUCCESS = 1;
+
 function getContextPath() {
   var hostIndex = location.href.indexOf(location.host) + location.host.length;
   return location.href.substring(hostIndex, location.href.indexOf("/", hostIndex + 1));
@@ -10,8 +12,6 @@ window.onload = function () {
 	document.querySelector("#btnNavSignup").onclick = function() {
 		window.location.href="/register";
 	}
-	
-	
 	
   getInfo();
   getEvent();
@@ -54,23 +54,17 @@ function validate() {
 }
 
 async function login() {
-  //  validate()가 true를 return하면 수행
-  //백엔드로 전송할 아이디 준비
-  //비동기 요청
-  //post
-  //로그인 성공 -> 게시판 메인 페이지로 이동(board/boardMain)
-  //로그인 실패 -> alert
-
-  let loginEmail = document.querySelector("#userEmail").value;
-  let loginPassword = document.querySelector("#userPassword").value;
-  let urlParmas = new URLSearchParams({
+	
+  let userEmail = document.querySelector("#userEmail").value;
+  let userPassword = document.querySelector("#userPassword").value;
+  let urlParams = new URLSearchParams({
 	  userEmail: userEmail,
 	  userPassword: userPassword,
   });
 
   let fetchOptions = {
     method: "POST",
-    body: urlParmas,
+    body: urlParams,
   };
 
   let response = await fetch("/login", fetchOptions);
@@ -94,19 +88,20 @@ async function logout() {
 }
 
 async function getInfo() {
-  let response = await fetch("/user/getInfo");
+  let response = await fetch("/users");
   let data = await response.json(); //==Json.parse();
 
-  if (data.result == "success") {
-    console.log("로그인 상태");
+  if (data.result == SUCCESS) {
+    console.log("로그인 성공");
     //내정보에 정보 넣기
+    console.log(data); //test
     makeInfo(data);
     //버튼 보이기
     document.querySelector("#btnNavInfo").setAttribute("style", "display:block");
     document.querySelector("#btnNavSignup").setAttribute("style", "display:none");
     document.querySelector("#btnNavLogin").setAttribute("style", "display:none");
     document.querySelector("#btnNavLogout").setAttribute("style", "display:block");
-  } else if (data.result == "fail") {
+  } else {
     console.log("비로그인 상태");
     //버튼숨기기
     document.querySelector("#btnNavInfo").setAttribute("style", "display:none");
@@ -118,6 +113,7 @@ async function getInfo() {
 
 function makeInfo(data) {
   let myEmail = data.userEmail;
+  console.log(data.userEmail);
   document.querySelector("#myEmail").innerText = myEmail;
   let myName = data.userName;
   document.querySelector("#myName").innerText = myName;

@@ -24,25 +24,15 @@ public class LoginController {
     @PostMapping(value="/login")
     public ResponseEntity<Map<String, String>> login(UserDto dto, HttpSession session){
     	
-    	System.out.println(dto);
+    	System.out.println("login:"+dto);
     	
         UserDto userDto = service.login(dto);
         System.out.println(userDto);
 
         Map<String, String> map = new HashMap<>();
         if( userDto != null ) { // login 성공
-            // session 에 userDto 를 저장
             session.setAttribute("userDto", userDto);
-
-
-            // client 에게 성공 결과를 json 으로 전달
             map.put("result", "success");
-
-            // html 로 client 를 구성하므로 html 에서 server session 에 접근 X
-            // 로그인 성공 직후에 client 에게 client 가 필요로 하는 사용자 정보를 내려줘야 한다.
-            //map.put("userName", userDto.getUserName());
-            //map.put("userProfileImageUrl", userDto.getUserProfileImageUrl());
-
             return new ResponseEntity<Map<String, String>>(map, HttpStatus.OK);
         }
 

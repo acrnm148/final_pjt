@@ -26,6 +26,32 @@ public class UserServiceImpl implements UserService {
 		}
 		return userResultDto;
 	}
+
+	@Override
+	public UserResultDto userInfo(UserDto userDto) {
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(FAIL);
+		}
+		
+		return userResultDto;
+	}
+
+	@Override
+	public UserResultDto userUpdate(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserResultDto userDelete(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
